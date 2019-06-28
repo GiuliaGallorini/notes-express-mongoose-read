@@ -1,0 +1,15 @@
+<h2>Add company</h2>
+
+{{!-- Redirect to POST /add-company --}}
+<form action="/add-company" method="post">
+
+  {{!-- Define a req.body.name --}}
+  Name: <input type="text" name="name"><br>
+  {{!-- Define a req.body.number_of_employees --}}
+  Number of employees: <input type="number" name="number_of_employees"><br>
+  {{!-- Define a req.body.description --}}
+  Description: <textarea name="description"></textarea><br>
+  
+  <button>Create</button>
+
+</form>
