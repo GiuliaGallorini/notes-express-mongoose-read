@@ -49,7 +49,7 @@ router.get("/add-company", (req, res, next) => {
 });
 
 // Crud: CREATE
-// Route "GET /add-company" to handle the form submission
+// Route "POST /add-company" to handle the form submission
 // i.e. the new company is saved in the database and displayed in the home page
 router.post("/add-company", (req, res, next) => {
   // Shortcut for:
@@ -65,6 +65,34 @@ router.post("/add-company", (req, res, next) => {
   .then(
     res.redirect('/')
   )
+  .catch(err => {
+    console.log("An error happened", err)
+    res.redirect('/add-company'); // Not perfect: it redirects the user to the form again without any feedback
+  });
+});
+
+// crUd: UPDATE
+// Route "GET /edit-company/anId" to display/render the edit form
+router.get("/edit-company/:companyId", (req, res, next) => {
+  Company.findById(req.params.companyId)
+  .then(company => {
+    res.render("edit-company", { company });
+  })
+});
+
+// crUd: UPDATE
+// Route "POST /edit-company/anId" to handle the form submission
+router.post("/edit-company/:companyId", (req, res, next) => {
+  console.log("req.body", req.body);
+  let id = req.params.companyId;
+  let { name, number_of_employees, description } = req.body;
+  Company.findByIdAndUpdate(id, {
+    name,
+    number_of_employees,
+    description
+  }).then(() => {
+    res.redirect("/company/" + id);
+  });
 });
 
 
